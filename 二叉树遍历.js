@@ -78,3 +78,64 @@ var levelOrder = function(root) {
     }
     return res
 };
+
+/**
+ * 二叉树的最大深度
+ * @param  {*} root 
+ * @param {*} sum 
+ */
+var maxDepth = function(root) {
+    function dfs(root){
+        if(!root) return 0
+        let mD = Math.max(dfs(root.left),dfs(root.right)) + 1
+        return mD
+    }
+    return dfs(root)
+};
+
+/**
+ * 对称二叉树
+ * @param {*} root 
+ * @param {*} sum 
+ */
+var isSymmetric = function(root) {
+    function recur(L,R){
+        if(!L && !R){
+            return true
+        }
+        if(!L||!R||L.val!=R.val){
+            return false
+        }
+        return recur(L.left,R.right) && recur(L.right,R.left)
+    }
+    if(root===null) return true
+    return recur(root.left,root.right)
+};
+
+/**
+ * 给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。
+ * 
+ */
+var pathSum = function(root, sum) {
+    var paths = []
+    var res = []
+    function dfs(root,sum,paths){
+        if(root===null)return
+        sum -= root.val
+        // isLeafNode
+        if(root.left===null&&root.right===null){
+            if(sum===0){
+                paths.push(root.val)
+                res.push(paths.slice())
+                paths.pop()
+            }
+            return
+        }
+        paths.push(root.val)
+        dfs(root.left,sum,paths)
+        dfs(root.right,sum,paths)
+        paths.pop()
+    }
+    dfs(root,sum,paths)
+    return res
+};
