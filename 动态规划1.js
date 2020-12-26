@@ -59,7 +59,7 @@ var maxEnvelopes = function(envelopes) {
                     dp[i] = Math.max(dp[i],dp[j]+1)
                 }
             }
-        }
+        } 
         // let res = 0;
         // for(let i=0;i<n;i++){
         //     res = Math.max(res,dp[i])
@@ -85,4 +85,88 @@ arr = [[5,4],[6,4],[6,7],[2,3]]
 arr.sort(function sortByRule(a,b){
     return (a[0]===b[0])? b[1]-a[1]:a[0]-b[0]; 
 })
-console.log(arr)
+// console.log(arr)
+
+/**
+ * 9. 回文数
+ */
+var isPalindrome = function(x) {
+    // 是不是回文数，这个比较简单，直接反转后，观察是否相等即可，和回文子序列难度不能相比
+    if(x<0)return false
+    var cur = 0
+    var num = x
+    while(num){
+        cur = cur*10 + num%10
+        num = Math.floor(num/10)
+    }
+    return x===cur
+};
+
+/**
+ * 回文串，可以换顺序，非子串
+ */
+var canPermutePalindrome = function(s) {
+    // 判断是否有回文串，回文串的特点是，必须是成对出现，单个字符最多出现一个，那么转化成一个去重的问题
+    let obj = {}
+    for(let i=0;i<s.length;i++){
+        let char = s[i];
+        if(obj[char]){
+            delete obj[char]
+        }else{
+            obj[char]=1
+        }
+    }
+    return Object.keys(obj).length<=1
+};
+// let n = 3;
+
+// let dp = new Array(n).fill(0).map(x=>new Array(n).fill(0));
+// console.log(dp)
+/**
+ * 516 给定一个字符串 s ，找到其中最长的回文子序列，并返回该序列的长度。可以假设 s 的最大长度为 1000 。
+ */
+var longestPalindromeSubseq = function(s) {
+    /* 
+    关键词: 最长、子序列。 
+    标签： 动态规划
+    1. dp[i][j] 代表s[i...j]的最长回文子序列
+    2. 分析base case， 当i=j时，dp[i][i]必然为1，字符串长度为1，当i>j时，dp[i][j]必然为0，因为i应该<=j
+    3. 递推，如果s[i]===s[j],dp[i][j]+1,否则取dp[i-1][j]和dp[i][j-1]中较大的值
+    4. 分析遍历方向，因为归纳的条件相关，由已知退出未知，画图，此题适合i从下向上,j从左到右
+    */ 
+    let n = s.length;
+    let dp = new Array(n).fill(0).map(x=>new Array(n).fill(0));
+    for(let i=0;i<n;i++){
+        dp[i][i] = 1
+    }
+    for(let i=n-2;i>=0;i--){
+        for(let j=i+1;j<n;j++){
+            if(s[i]===s[j]){
+                dp[i][j] = dp[i+1][j-1]+2
+            }else{
+                dp[i][j] = Math.max(dp[i+1][j],dp[i][j-1])
+            }
+        }
+    }
+    return dp[0][n-1]
+     /**
+     * 降维打击
+     */
+    /**
+     * let n = s.length;
+    var dp = new Array(n).fill(1);
+    for(let i=n-2;i>=0;i--){
+        let pre = 0;
+        for(let j=i+1;j<n;j++){
+            let temp = dp[j];
+            if(s[i]===s[j]){
+                dp[j] = pre+2;
+            }else{
+                dp[j] = Math.max(dp[j],dp[j-1])
+            }
+            pre = temp;
+        }
+    }
+    return dp[n-1]
+     */
+};
