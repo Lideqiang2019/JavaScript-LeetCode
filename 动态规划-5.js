@@ -54,18 +54,18 @@ var change = function(amount, coins) {
     return dp[n][amount]
 };
 
-let dp = new Array(3).fill(0)
-dp[0] = 1
+// let dp = new Array(3).fill(0)
+// dp[0] = 1
 
-for(let i=0;i<3;i++){
-    // console.log("1",i)
-    console.log("m",dp[i])
-    for(let j=1;j<3;j++){
-        console.log("n",dp[i])
-        dp[i] = dp[i]+dp[j]
-        console.log(dp[i])
-    }
-}
+// for(let i=0;i<3;i++){
+//     // console.log("1",i)
+//     console.log("m",dp[i])
+//     for(let j=1;j<3;j++){
+//         console.log("n",dp[i])
+//         dp[i] = dp[i]+dp[j]
+//         console.log(dp[i])
+//     }
+// }
 
 /**
  * 经典打家劫舍问题
@@ -85,9 +85,22 @@ var rob = function(nums) {
     }
     return dp[0]
 };
+
 var rob = function(nums) {
     /**
-     * 自顶向下，用备忘录来优化时间和空间
+     * 
+     */
+    let n = nums.length;
+    let dp = new Array(n+2).fill(0)
+    for(let i=n-1;i>=0;i--){
+        dp[i] = Math.max(dp[i+2]+nums[i],dp[i+1])
+    }
+    return dp[0]
+};
+
+var rob = function(nums) {
+    /**
+     * 自顶向下， 用备忘录来优化时间和空间
      */
     let memo = new Array(nums.length+2).fill(-1)
     return dp(nums,0)
@@ -102,4 +115,212 @@ var rob = function(nums) {
         memo[start] = res
         return res
     }
+};
+
+let dic = {}
+dic[1] = 'a'
+dic[2] = 'b'
+console.log(dic)
+if(1 in dic){
+    console.log(dic[1])
+}
+
+/**
+ * 
+ */
+let n =3
+let dp = new Array(n).fill(0).map(x=>new Array(2).fill(0).map(y=>new Array(2).fill(0)))
+console.log(dp)
+console.log(dp[1][1][1])
+
+/**
+ * 买卖股票
+ */
+var maxProfit = function(prices) {
+    /**
+     * 最大利润
+     * dp[i][j]表示第i天和j持有或者非持有，买卖股票的最大值
+     * dp[i][0] = Math.max(dp[i-1][0] , dp[i-1][1]+prices[i])
+     * dp[i][1] = Math.max(dp[i-1][0] , dp[i-1][1]) 
+     * base case 就一只股票， dp[0][0] = 0
+     * dp[n-1][0]即为所求，
+     * 优化内存
+     */
+    /**
+     * let n = prices.length;
+    if(n===0) return 0
+    // let dp = new Array(n).fill(0).map(x=>new Array(2).fill(0))
+    let dp_0 = 0, dp_1 = 0, dp_i_0 = 0, dp_i_1 = 0;
+    for(let i=0;i<n;i++){
+        if(i-1===-1){
+            dp[i][0] = 0
+            dp[i][1] = -prices[i]
+            continue;
+        }
+        dp[i][0] = Math.max(dp[i-1][0] , dp[i-1][1]+prices[i])
+        dp[i][1] = Math.max(-prices[i] , dp[i-1][1]) 
+    }
+    return dp[n-1][0]
+     */
+    let n = prices.length;
+    if(n===0) return 0
+    // let dp = new Array(n).fill(0).map(x=>new Array(2).fill(0))
+    let dp_i_0 = 0, dp_i_1 = -11111;
+    for(let i=0;i<n;i++){
+        if(i-1===-1){
+            dp_i_0 = 0
+            dp_i_1 = -prices[i]
+            continue;
+        }
+        dp_i_0 = Math.max(dp_i_0 , dp_i_1+prices[i])
+        dp_i_1 = Math.max(-prices[i] , dp_i_1) 
+    }
+    return dp_i_0
+    
+};
+
+var maxProfit = function(prices) {
+    /**
+     * k = infinit 此时k = k-1
+    * dp[i][0] = Math.max(dp[i-1][0] , dp[i-1][1]+prices[i])
+    * dp[i][1] = Math.max(dp[i-1][0] -prices[i] , dp[i-1][1]) 
+    */
+    let n = prices.length;
+    if(n===0) return 0
+    // let dp = new Array(n).fill(0).map(x=>new Array(2).fill(0))
+    let dp_i_0 = 0, dp_i_1 = -11111;
+    for(let i=0;i<n;i++){
+        if(i-1===-1){
+            dp_i_0 = 0
+            dp_i_1 = -prices[i]
+            continue;
+        }
+        let tmp = dp_i_0;
+        dp_i_0 = Math.max(tmp , dp_i_1+prices[i])
+        dp_i_1 = Math.max(tmp-prices[i] , dp_i_1) 
+    }
+    return dp_i_0
+};
+
+var maxProfit = function(prices) {
+    /**
+    * 最大利润
+    * dp[i][k][j]表示第i天和j持有或者非持有，买卖股票的最大值, k=2
+    * dp[i][k][0] = Math.max(dp[i-1][k][0] , dp[i-1][k][1]+prices[i])
+    * dp[i][k][1] = Math.max(dp[i-1][k-1][0]-prices[i] , dp[i-1][k][1]) 
+    * base case 就一只股票， dp[0][0] = 0
+    * dp[n-1][0]即为所求，
+    * 优化内存,让买入为一次交易
+    */
+   let n = prices.length;
+   let max_k = 2
+   let dp = new Array(n).fill(0).map(x=>new Array(max_k+1).fill(0).map(y=>new Array(2).fill(0)))
+   for(let i=0;i<n;i++){
+       for(let k = max_k;k>0;k--){
+           if(i-1===-1){
+               dp[i][k][0] = 0
+               dp[i][k][1] = -prices[i]
+               continue;
+           }
+           dp[i][k][0] = Math.max(dp[i-1][k][0] , dp[i-1][k][1]+prices[i])
+           dp[i][k][1] = Math.max(dp[i-1][k-1][0]-prices[i] , dp[i-1][k][1]) 
+       }
+   }
+   return dp[n-1][max_k][0]
+};
+
+var maxProfit = function(k, prices) {
+    /**
+     * 最大利润
+     * dp[i][k][j]表示第i天和j持有或者非持有，买卖股票的最大值
+     * dp[i][k][0] = Math.max(dp[i-1][k][0] , dp[i-1][k][1]+prices[i])
+     * dp[i][k][1] = Math.max(dp[i-1][k-1][0] -prices[i] , dp[i-1][k][1]) 
+     * base case 就一只股票， dp[0][0] = 0
+     * dp[n-1][0]即为所求，
+     * 优化内存,让买入为一次交易
+     */
+    var maxProfit_k_inf = function(prices) {
+    /**
+     * k = infinit 此时k = k-1
+    * dp[i][0] = Math.max(dp[i-1][0] , dp[i-1][1]+prices[i])
+    * dp[i][1] = Math.max(dp[i-1][0] -prices[i] , dp[i-1][1]) 
+    */
+    let n = prices.length;
+    if(n===0) return 0
+    // let dp = new Array(n).fill(0).map(x=>new Array(2).fill(0))
+    let dp_i_0 = 0, dp_i_1 = -11111;
+    for(let i=0;i<n;i++){
+        if(i-1===-1){
+            dp_i_0 = 0
+            dp_i_1 = -prices[i]
+            continue;
+        }
+        let tmp = dp_i_0;
+        dp_i_0 = Math.max(tmp , dp_i_1+prices[i])
+        dp_i_1 = Math.max(tmp-prices[i] , dp_i_1) 
+    }
+    return dp_i_0
+    };
+    let n = prices.length;
+    let max_k = k
+    let dp = new Array(n).fill(0).map(x=>new Array(max_k+1).fill(0).map(y=>new Array(2).fill(0)))
+    if(k>n/2){
+        return maxProfit_k_inf(prices)
+    }
+    for(let i=0;i<n;i++){
+        for(let k = max_k;k>0;k--){
+            if(i-1===-1){
+                dp[i][k][0] = 0
+                dp[i][k][1] = -prices[i]
+                continue;
+            }
+            dp[i][k][0] = Math.max(dp[i-1][k][0] , dp[i-1][k][1]+prices[i])
+            dp[i][k][1] = Math.max(dp[i-1][k-1][0]-prices[i] , dp[i-1][k][1]) 
+        }
+    }
+    return dp[n-1][max_k][0]
+
+
+};
+
+var maxProfit = function(prices) {
+    /**
+     * 冷冻期，需要修改买入时的时刻
+     * dp[i][0] = Math.max(dp[i-1][0] , dp[i-1][1]+prices[i])
+     * dp[i][1] = Math.max(dp[i-2][0] -prices[i] , dp[i-1][1]) 
+     */
+    let n = prices.length;
+    if(n===0) return 0
+    // let dp = new Array(n).fill(0).map(x=>new Array(2).fill(0))
+    let dp_i_0 = 0, dp_i_1 = -11111;
+    let dp_i_pre = 0;
+    for(let i=0;i<n;i++){
+        if(i-1===-1){
+            dp_i_0 = 0
+            dp_i_1 = -prices[i]
+            continue;
+        }
+        let tmp = dp_i_0
+        dp_i_0 = Math.max(dp_i_0 , dp_i_1+prices[i])
+        dp_i_1 = Math.max(dp_i_pre-prices[i] , dp_i_1)
+        dp_i_pre = tmp 
+    }
+    return dp_i_0
+};
+
+var maxProfit = function(prices, fee) {
+    /**
+    * 需要手续费，购买时候减去即可
+    * dp[i][0] = Math.max(dp[i-1][0] , dp[i-1][1]+prices[i])
+    * dp[i][1] = Math.max(dp[i-1][0] -prices[i] - fee , dp[i-1][1]) 
+    */
+   let n = prices.length;
+   if(n===0) return 0
+   let dp_i_0 = 0, dp_i_1 = -111111111;
+   for(let i=0;i<n;i++){
+       let tmp = dp_i_0
+       dp_i_0 = Math.max(dp_i_0 , dp_i_1+prices[i])
+       dp_i_1 = Math.max(tmp - prices[i] -fee , dp_i_1) 
+   }
+   return dp_i_0
 };
