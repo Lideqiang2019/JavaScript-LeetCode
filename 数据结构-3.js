@@ -110,7 +110,6 @@ var lowestCommonAncestor = function(root, p, q) {
     return left==null?right:left
 };
 
-<<<<<<< HEAD
 
 // let m = 12
 // let nums = []
@@ -249,7 +248,6 @@ var maxSlidingWindow = function(nums, k) {
 }; 
 
 console.log(nextPermutation([3,2,1]))
-=======
 /**
  * 
  * @param {*} head 
@@ -358,4 +356,3 @@ function reverse(a,b){
     }
     return pre
 }
->>>>>>> cc55d0d055dcdc2ba8893ddbe151875f6cdf603c
