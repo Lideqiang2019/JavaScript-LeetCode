@@ -109,3 +109,142 @@ var lowestCommonAncestor = function(root, p, q) {
     }
     return left==null?right:left
 };
+
+
+// let m = 12
+// let nums = []
+// while(m){
+//     nums.push(m%10)
+//     m = Math.floor(m / 10)
+// }
+// console.log(nums
+// m = m.toString()
+// for(let i=0;i<m.length;i++){
+//     nums.push(Number(m[i]))
+// }
+// console.log(nums);
+
+// let n = nums.join(',')
+// let v = n.split(',')
+
+// console.log(nextGreaterElement3(11))
+// let str = '12'
+// let strArr = Array.from(str)
+// console.log(strArr)
+// console.log(strArr[1]>strArr[0])
+
+
+function nextGreaterElement3(n) {
+    let res = 0
+    let q = []
+    let str = Array.from(String(n))//字符串数组
+  
+    for (let i = str.length - 1; i >= 0; i--) {
+      if (q.length === 0 || str[i] >= q[q.length - 1]) q.push(str[i]) ;
+      else {
+        let count = 0
+        // 出栈，记录出栈的位数
+        while (q.length !== 0 && str[i] < q[q.length - 1]) {
+          q.pop()
+          count++
+        }
+        [str[i], str[i + count]] = [str[i + count], str[i]]  // swap元素
+        res = parseInt(
+          str.slice(0, i + 1).join('') +
+          str.slice(i + 1).reverse().join('')
+        ) // 反转右边
+        return res >= 2 ** 31 - 1 ? -1 : res
+      }
+    }
+  
+    return -1
+  }
+  
+
+
+var nextGreaterElement4 = function(n) {
+    /**
+     * 总的思想： 后个位起，构造一个递增栈，如果不在递增了，找到那个数和栈内的第一个比其大的数，换换位置，然后reverse一下，这样就能找到最小的比原数大的数了
+     */
+    let res = 0
+    let str = Array.from(String(n))
+    let stack = []
+    let m = str.length;
+    for(let i=m-1;i>=0;i--){
+        if(stack.length===0 || str[i] >=stack[stack.length-1]){
+            // 构造递增栈
+            stack.push(str[i])
+        }else{
+            let count = 0;
+            while(stack.length!==0 && stack[stack.length-1]>str[i]){
+                // 递增栈不再递增，数一数栈内有多少个数比当前的str[i]大的数
+                stack.pop()
+                count++
+            }
+            // 交换一下
+            [str[i],str[i+count]] = [str[i+count],str[i]]
+            res = parseInt(
+                str.slice(0,i+1).join('') +
+                str.slice(i+1).reverse().join('')
+            )
+            return res>=2**31-1?-1:res
+        }
+    }
+    return -1
+}
+
+/**
+ * 
+ * @param {*} nums 
+ * 下一个排列
+ */
+// console.log(nextGreaterElement4(12443322))
+
+var nextPermutation = function(nums) {
+    /**
+     * 也可以用单调栈来解决，这题和下一个更大的数基本思路一致
+     * 但是只能用常数空间
+     */
+    let n = nums.length;
+    if(n<2) return nums 
+    // 找到i和j
+    let i = n-2, j = n-1
+    // 找到nums[i]小于nums[j]即从后向前的第一个“掉下去”的数
+    while(i>=0 && nums[i]>=nums[i+1]){
+        i--
+    }
+    // 已经知道了i和j, 找到j到n之间nums[k]比nums[i]大的数，并换位
+    if(i>=0){
+        while(nums[j]<=nums[i] &&j>=0){
+            j--
+        }
+        [nums[i],nums[j]] = [nums[j],nums[i]]
+    }
+    let l = i+1
+    let r = n-1
+    while(l<r){
+        [nums[l],nums[r]] = [nums[r],nums[l]]
+        l++
+        r--
+    }
+};
+
+/**
+ * 滑动窗口的最大值，用单调队列实现
+ */
+var maxSlidingWindow = function(nums, k) {
+    let res = []
+    let window = []
+    for(let i = 0;i<nums.length;i++){
+        if(i<k-1){
+            window.push(nums[i])
+        }else{
+            window.push(nums[i])
+            res.push(Math.max(...window))
+            window.shift()
+        }
+    }
+    return res
+}; 
+
+console.log(nextPermutation([3,2,1]))
