@@ -229,6 +229,25 @@ var nextPermutation = function(nums) {
     }
 };
 
+var dailyTemperatures = function(T) {
+    /**
+     * 单调栈和下一个较大的元素基本一致
+     * 需要一个栈，存储较大的数，而放弃较小的数，以便能够降低时间复杂度
+     */
+    let stack = []
+    let n = T.length
+    let res = new Array(n).fill(0)
+ 
+    for(let i = n-1;i>=0;i--){
+        while(stack.length!==0 && T[i]>=T[stack[stack.length-1]]){
+            stack.pop()
+        }
+        res[i] = stack.length===0? 0: Math.abs(stack[stack.length-1] - i)
+        stack.push(i)
+    }
+    return res
+};
+
 /**
  * 滑动窗口的最大值，用单调队列实现
  */

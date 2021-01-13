@@ -143,3 +143,73 @@ let freq = b.get(a)
 b.set(a,freq+1)
 console.log(b)
 
+var findDuplicateSubtrees = function(root) {
+    const treeMap = new Map()
+    const result = []
+    function traversal(root) {
+        if(!root) {
+            return '#'
+        }
+        const left = traversal(root.left)
+        const right = traversal(root.right)
+        const subtree = `${left},${right},${root.val}`
+        if(treeMap.get(subtree)) {
+            treeMap.set(subtree, treeMap.get(subtree)+1)
+        } else {
+            treeMap.set(subtree, 1)
+        }
+        if(treeMap.get(subtree) === 2) {
+            result.push(root)
+        }
+        return subtree
+    }
+    traversal(root)
+    return result
+};
+
+
+var MyQueue = function() {
+    this.stack1 = []
+    this.stack2 = []
+};
+
+/**
+ * Push element x to the back of queue. 
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function(x) {
+    this.stack1.push(x)
+};
+
+/**
+ * Removes the element from in front of queue and returns that element.
+ * @return {number}
+ */
+MyQueue.prototype.pop = function() {
+    this.peek()
+    return this.stack2.pop()
+};
+
+/**
+ * Get the front element.
+ * @return {number}
+ */
+MyQueue.prototype.peek = function() {
+    // 先将stack1中的元素弹出，放入stack2中
+    if(this.stack2.length===0){
+        while(this.stack1.length!==0){
+            this.stack2.push(this.stack1.pop())
+        }
+    }
+
+    return this.stack2[this.stack2.length-1]
+};
+
+/**
+ * Returns whether the queue is empty.
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function() {
+    return this.stack2.length===0 && this.stack1.length===0
+};
