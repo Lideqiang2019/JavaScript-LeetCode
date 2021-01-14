@@ -213,3 +213,37 @@ MyQueue.prototype.peek = function() {
 MyQueue.prototype.empty = function() {
     return this.stack2.length===0 && this.stack1.length===0
 };
+
+
+MyStack.prototype.push = function(x) {
+    this.stack.push(x)
+};
+
+/**
+ * Removes the element on top of the stack and returns that element.
+ * @return {number}
+ */
+MyStack.prototype.pop = function() {
+    if(this.empty()){
+        return undefined
+    }
+    let tmp = this.stack[this.stack.length-1]
+    this.stack.length = this.stack.length-1
+    return tmp
+};
+
+/**
+ * Get the top element.
+ * @return {number}
+ */
+MyStack.prototype.top = function() {
+    return this.stack[this.stack.length-1]
+};
+
+/**
+ * Returns whether the stack is empty.
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function() {
+    return this.stack.length===0
+};
