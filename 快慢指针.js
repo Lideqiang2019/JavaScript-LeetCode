@@ -138,4 +138,89 @@ var reverseString = function(s) {
     return s
 };
 
-console.log(findTarget([1,2,3,4,1].sort(),2))
+// console.log(findTarget([1,2,3,4,1].sort(),2))
+var removeDuplicates = function(nums) {
+    /**
+     * 排序好的数组
+     * 比较当前的nums[slow]与nums[fast]如果二者相等的话，需要去重，将当前的fast赋值给slow
+     */
+    let slow = 0, fast = 0
+    while(fast<nums.length){
+        if(nums[slow]!==nums[fast]){
+            // 只要记录不重复的就可以了
+            slow++
+            nums[slow] = nums[fast]
+        }else{
+            fast++
+        }
+    }
+    return nums.slice(0,slow+1)
+};
+
+/**
+ * 
+ * @param {*} head 
+ * 83. 删除排序链表中的重复元素
+ */
+
+var deleteDuplicates = function(head) {
+    if(!head) return null
+     let slow = head, fast=head
+     while(fast!=null){
+         if(slow.val!=fast.val){
+            slow = slow.next
+            slow.val = fast.val
+         }else{
+             fast = fast.next
+         }
+     }
+     slow.next = null
+     return head
+};
+
+/**
+ * 
+ * @param {*} nums 
+ * @param {*} val 
+ * 27. 移除元素
+ */
+
+var removeElement = function(nums, val) {
+    /**
+     * 一下能想到用冒泡，但其实还可以用快慢指针解决
+     */
+    let slow = 0,fast = 0
+    while(fast<nums.length){
+        if(nums[fast]!=val){
+            
+            nums[slow] = nums[fast] 
+            slow++
+        }
+        fast++
+    }
+    return slow
+};
+
+/**
+ * 
+ * @param {*} nums 
+ * 283. 移动零
+ */
+var moveZeroes = function(nums) {
+    /**
+     * 将0移动到末尾，依然是快慢指针
+     */
+    let slow = 0, fast = 0
+    while(fast<nums.length){
+        // 如果是0
+        if(nums[fast]!=0){
+            nums[slow] = nums[fast]
+            slow++
+        }
+        fast++
+    }
+    for(let i=slow;i<nums.length;i++){
+        nums[i] = 0
+    }
+    return nums
+};
