@@ -98,7 +98,7 @@ var letterCombinations = function(digits) {
     }
 };
 
-console.log(letterCombinations('234'))
+// console.log(letterCombinations('234'))
 
 var combine = function(n, k) {
     /**
@@ -147,3 +147,116 @@ var permute = function(nums) {
         }
     }
 };
+
+/**
+ * 
+ * @param {*} n 
+ * n皇后问题
+ */
+var solveNQueens = function(n) {
+    /**
+     * N皇后会攻击同行、同列、左上和右上
+     */
+    // 1. 初始化一个“空棋盘”
+    let table = new Array(n).fill('.').map(x=>new Array(n).fill('.'))
+    let res = []
+    backtrack(table,0)
+    return res
+
+    function backtrack(board,row){
+        if(row==board.length){
+            // 每次的board值都会变，因此要用slice拷贝一份，直接push是不行的
+            let stringBoard = board.slice()
+            console.log(stringBoard)
+            for(let i=0;i<board.length;i++){
+                stringBoard[i] = stringBoard[i].join('')
+            }
+            res.push(stringBoard)
+            return 
+        }
+        let n = board[row].length
+        for(let col=0;col<n;col++){
+            // 做选择
+            if(!isValid(board,row,col)){
+                continue
+            }
+            board[row][col] = 'Q'
+            backtrack(board, row+1)
+            board[row][col] = '.'
+        }
+    }
+
+    function isValid(board,row,col){
+        for(let i=0;i<row;i++){
+            // 列中是否有冲突
+            if(board[i][col]=='Q'){
+                return false
+            }
+        }
+
+        for(let i=row-1,j=col-1;i>=0 && j>=0;i--,j--){
+            // 左上
+            if(board[i][j]=='Q'){
+                return false
+            }
+        }
+
+        for(let i=row-1,j=col+1;i>=0 && j<board.length;i--,j++){
+            // 右上
+            if(board[i][j]=='Q'){
+                return false
+            }
+        }
+
+        return true
+    }
+};
+// console.log(solveNQueens(4))
+
+// let arr1 = [[1,2,3],[4,5,6]]
+// let arr2 = [[1,2,4],[4,7,6]]
+// console.log(arr1)
+// let arr = []
+// arr.push(arr1)
+// arr.push(arr2)
+// console.log(arr)
+let matrix = 
+[["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
+var solveSudoku = function(board) {
+    const backtrack = (board,i,j)=>{
+        let m=9,n=9
+        if(i==m){
+            return true
+        }
+        if(j==n){
+            // 如果该行已经结束了
+            return backtrack(board,i+1,0)
+        }
+        if(board[i][j]!='.'){
+            return backtrack(board,i,j+1)
+        }
+
+        for(let ch='1';ch<='9';ch++){
+            if(!isValid(board,i,j,String(ch))){
+                continue
+            }
+            board[i][j] = ch.toString()
+            if(backtrack(board,i,j+1)){
+                return true
+            }
+            board[i][j] = '.'
+        }
+    }
+    function isValid(board,r,c,ch){
+        for(let i=0;i<9;i++){
+            if(board[r][i]==ch) return false
+            if(board[i][c]==ch) return false
+            if(board[Math.floor(r/3)*3 + Math.floor(i/3)][Math.floor(c/3)*3 + c%3]==ch) return false
+        }
+        return true
+    }
+    backtrack(board,0,0)
+    return board
+}; 
+
+console.log(solveSudoku(matrix))

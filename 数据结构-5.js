@@ -95,3 +95,60 @@ var removeDuplicateLetters = function(s) {
 };
 
 console.log(removeDuplicateLetters("bcac"))
+
+/**
+ * 剑指 Offer 59 - II. 队列的最大值
+ */
+var MaxQueue = function() {
+    /**
+     * 队列的最大值，而且时间复杂度为O(1),查找O(1)需要用hashmap，其实是一种优先队列,记录max的index
+     */
+    this.queue = []
+    this.dequeue = []
+};
+
+/**
+ * @return {number}
+ */
+MaxQueue.prototype.max_value = function() {
+    // dequeue中的队首元素就是最大的值
+    if(this.dequeue.length!==0){
+        return this.dequeue[0]
+    }
+    return -1
+};
+
+/** 
+ * @param {number} value
+ * @return {void}
+ */
+MaxQueue.prototype.push_back = function(value) {
+    // 加入新元素,对于queue直接加入即可，同时维护单调队列
+    this.queue.push(value)
+    // 将比当前值小的都pop出去
+    while(this.dequeue.length!==0 && this.dequeue[this.dequeue.length-1]<value){
+        this.dequeue.pop()
+    }
+    this.dequeue.push(value)
+};
+
+/**
+ * @return {number}
+ */
+MaxQueue.prototype.pop_front = function() {
+    // 对于queue直接pop即可，但是deque维护这queue的最大值，如果queue的pOp值是最大值，应该将dequeue也shift出去
+    if(!this.queue.length) return -1
+    let val  = this.queue.shift()
+    if(val === this.dequeue[0]){
+       this.dequeue.shift()
+    }
+    return val
+};
+
+/**
+ * Your MaxQueue object will be instantiated and called as such:
+ * var obj = new MaxQueue()
+ * var param_1 = obj.max_value()
+ * obj.push_back(value)
+ * var param_3 = obj.pop_front()
+ */
