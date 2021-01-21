@@ -259,4 +259,44 @@ var solveSudoku = function(board) {
     return board
 }; 
 
-console.log(solveSudoku(matrix))
+// console.log(solveSudoku(matrix))
+var generateParenthesis = function(n) {
+    /**
+     * 穷举是可以写出所有的组合的，对于括号是成对出现的，不能出现右括号多于左括号的情况
+     * 可以用left和right记录已经使用的左右括号数量
+     * 结束条件为left<right或者是left==0&&right==0将结果放入res
+     * 
+     */
+    let res = []
+    let track = []
+    backtrack(n, n, track)
+    return res
+    function backtrack(left, right, track){
+        // 结束条件
+        if(right<left) return // 右括号应该少于左边，这个是个反向
+
+        if(left<0 || right<0) return
+        if(left == 0 && right == 0){
+            // res.push(track)
+            // console.log(track.join(''))
+            res.push(track.join(''))
+            return
+        }
+
+        // 选择列表,只有两个，左括号或者右括号
+        track.push('(')
+        backtrack(left - 1, right, track)
+        track.pop()
+
+        track.push(')')
+        backtrack(left, right -1 , track)
+        track.pop()
+    }
+};
+
+console.log(generateParenthesis(3))
+// let a = []
+// a.push('(')
+// console.log(a)
+// a.pop()
+// console.log(a)
