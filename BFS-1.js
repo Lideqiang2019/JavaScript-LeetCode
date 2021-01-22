@@ -65,7 +65,7 @@ var openLock = function(deadends, target) {
             }
         }
         step++
-    }
+    } 
     return -1
 };
 
