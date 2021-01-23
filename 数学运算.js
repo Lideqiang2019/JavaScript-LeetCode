@@ -35,3 +35,62 @@ var singleNumber = function(nums) {
     }
     return res
 };
+
+/**
+ * 172. 阶乘后的零
+ */
+var trailingZeroes = function(n) {
+    let res = 0
+    for(let i=5;i<=n;i=i*5){
+        res += Math.floor(n/i)
+    }
+    return res
+};
+
+/**
+ * 793. 阶乘函数后K个零
+ */
+var preimageSizeFZF = function(K) {
+    return rightBound(K) - leftBound(K) + 1
+    
+
+    /**
+     * 可以用暴力循环的方式查找n能够产生k个0的数
+     */
+    function leftBound(target){
+        let lo = 0, hi = Number.MAX_SAFE_INTEGER
+        while(lo<hi){
+            let mid = lo + Math.floor((hi - lo)/2)
+            if(trailingZeroes(mid)>target){
+                hi = mid
+            }else if(trailingZeroes(mid)<target){
+                lo = mid + 1
+            }else{
+                hi = mid
+            }
+        }
+        return lo
+    }
+
+    function rightBound(target){
+        let lo = 0, hi = Number.MAX_SAFE_INTEGER
+        while(lo<hi){
+            let mid = lo + Math.floor((hi - lo)/2)
+            if(trailingZeroes(mid)>target){
+                hi = mid
+            }else if(trailingZeroes(mid)<target){
+                lo = mid + 1
+            }else{
+                lo = mid + 1
+            }
+        }
+        return lo - 1
+    }
+};
+var trailingZeroes = function(n) {
+        let res = 0
+        for(let i=n;Math.floor(i/5)>0;i=Math.floor(i/5)){
+            res += Math.floor(i/5)
+        }
+        return res
+    };
