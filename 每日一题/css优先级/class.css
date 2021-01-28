@@ -1,0 +1,11 @@
+#test{
+    width: auto;
+    height: auto;
+    background-color: aquamarine;
+    color: red;
+    overflow: hidden;
+}
+
+.mytest{
+    color: #000 !important;
+}

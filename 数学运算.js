@@ -94,3 +94,27 @@ var trailingZeroes = function(n) {
         }
         return res
     };
+
+    var findErrorNums = function(nums) {
+        /**
+         * 基本思路是[1...N]对应索引，让索引与nums的值对应，并将nums值修改为负值，索引对应的数一个为负值，那么负值就是被修改了的（主要是同一个索引的值被修改了），那么找到了重复的数字，而缺失的数字的索引并没有修改，所以可以直接找到
+         */
+        let n = nums.length
+        let dump = -1
+        for(let i=0;i<n;i++){
+            let index = Math.abs(nums[i])-1
+            if(nums[index]<0){
+                dump = Math.abs(nums[i])
+            }else{
+                nums[index] *=-1
+            }
+        }
+    
+        let missing = -1
+        for(let i=0;i<n;i++){
+            if(nums[i]>0){
+                missing = i + 1
+            }
+        }
+        return [dump,missing]
+    };
