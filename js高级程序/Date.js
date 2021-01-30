@@ -1,0 +1,10 @@
+let date = new Date(2021,0,28);
+console.log(date.toLocaleString());
+console.log(date.toTimeString());
+console.log(date.toLocaleDateString());
+console.log(date.toUTCString());
+console.log(date.getDate());
+console.log(date.getFullYear());
+console.log(date.getMonth()+1);
+console.log(date.getHours());
+console.log(date.getDay());
