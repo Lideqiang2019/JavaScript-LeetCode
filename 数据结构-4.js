@@ -169,8 +169,8 @@ var findDuplicateSubtrees = function(root) {
 
 
 var MyQueue = function() {
-    this.stack1 = []
-    this.stack2 = []
+    this.stack1 = [] // 队尾
+    this.stack2 = [] // 队头
 };
 
 /**

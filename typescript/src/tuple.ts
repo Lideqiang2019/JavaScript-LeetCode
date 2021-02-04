@@ -1,0 +1,1 @@
+const bts:(string|number)[] = ['str','a',1];
