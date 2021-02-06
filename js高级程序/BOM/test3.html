@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="removeTimer()">取消</button>
+    <script>
+        let timer1 = setTimeout(function(){
+            console.log('1111');
+        },1000);
+        let timer2 = setTimeout(function(){
+            console.log('2222');
+        },5000);
+        console.log('3333');
+        function Demo(){
+            this.name = 'bb';
+            let obj = this;
+            this.show = function(){
+                setTimeout(function(){
+                console.log('aaa'+obj.name);
+            }
+            ,1000)
+            }
+        }
+        new Demo().show();
+        function removeTimer(){
+            clearTimeout(timer2);
+        }
+    </script>
+</body>
+</html>

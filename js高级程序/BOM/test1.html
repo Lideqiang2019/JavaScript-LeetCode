@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./test1.js">
+</head>
+<body>
+    <h1>test1</h1>
+    <!-- <script>
+        let script = document.createElement('script');
+        script.src = 'test1.js';
+        document.body.appendChild(script);
+    </script> -->
+    <script>
+        window.onload = function(){
+            document.getElementById('page').innerHTML = '#########!!!!!';
+            alert('页面加载完毕');
+        }
+        window.onunload = function(){
+            alert('关闭窗口');
+        }
+        window.onbeforeunload = function(){
+            alert('确定要关闭窗口？')
+        }
+    </script>
+    <div id='page'></div>
+</body>
+</html>

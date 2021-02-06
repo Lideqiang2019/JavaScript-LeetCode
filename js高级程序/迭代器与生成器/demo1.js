@@ -1,0 +1,11 @@
+let num = 1;
+let obj = {};
+let arr = [1,2,3];
+console.log(num[Symbol.iterator]);
+console.log(arr[Symbol.iterator]);
+let iter = arr[Symbol.iterator]();
+console.log(iter);
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());
+console.log(iter.next());

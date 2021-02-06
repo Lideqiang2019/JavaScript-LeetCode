@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.open('http:baidu.com')
+        function getQueryArgs(){
+            let qs = (window.location.search.length>0?location.search.substring(1):'');
+            let args = {};
+            for(let item of qs.split('?').map(q=>q.split('='))){
+                let name = decodeURIComponent(item[0]),
+                    value = decodeURIComponent(item[1]);
+                args[name] = value;
+            }
+            return args;
+        }
+
+        console.log(getQueryArgs());
+    </script>
+</body>
+</html>

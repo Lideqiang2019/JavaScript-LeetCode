@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn1">取消</button>
+    <script>
+        window.onload = function () {
+            var obj = document.getElementById('btn1');
+            let timer = null;
+            obj.onmouseover = function () {
+                let obj1 = this;
+                timer = setTimeout(function () {
+                    obj1.style.backgroundColor = 'red';
+                }, 100)
+            }
+            obj.onmouseout = function () {
+                clearTimeout(timer);
+                this.style.backgroundColor = '';
+            }
+        }
+
+    </script>
+</body>
+
+</html>

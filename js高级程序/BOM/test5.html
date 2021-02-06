@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 250px;
+            width: 200px;
+            background-color: blueviolet;
+            color: black;
+            font-size: 5cm;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+            var obj = document.getElementById('demo');
+            let i = 0;
+            var timer = null;
+            obj.onmouseover = function () {
+                timer = setInterval(function () {
+                    i++;
+                    obj.innerHTML = i;
+                }, 1000);
+            }
+
+            obj.onmouseout = function(){
+                clearInterval(timer);
+            }
+        }
+    </script>
+    <div id='demo'>0</div>
+</body>
+
+</html>

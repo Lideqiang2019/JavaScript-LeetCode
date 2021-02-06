@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let hasPlugin = function(name){
+            name = name.toLowerCase();
+            for(let plugin of window.navigator.plugins){
+                console.log(plugin);
+                if(plugin.name.toLocaleLowerCase().indexOf(name)>-1){
+                    return true;
+                }
+            }
+            return false;
+        }
+        // console.log(hasPlugin('Adobe Acrobat'));
+        console.log(navigator.getBattery());
+        console.log(navigator.onLine);
+        console.log(navigator.hardwareConcurrency,navigator.deviceMemory);
+        console.log(navigator.maxTouchPoints);
+
+        let p = null;
+        navigator.geolocation.getCurrentPosition((x)=>p=x);
+        console.log(p);
+    </script>
+</body>
+</html>

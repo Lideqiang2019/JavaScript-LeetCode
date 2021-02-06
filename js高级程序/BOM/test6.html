@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" onclick="changeColor(this.value)" value="red">
+    <input type="button" onclick="changeColor(this.value)" value="green">
+    <input type="button" onclick="changeColor(this.value)" value="blue">
+    <button onclick="closeWindow()">关闭窗口</button>
+    <script>
+        var sub_window = window.open('test7.html','_blank','width=200px,height=200px');
+        console.log(sub_window);
+        function changeColor(color){
+            // window.document.bgColor = color;
+            console.log(color);
+            sub_window.document.bgColor = color;
+        }
+        function closeWindow(){
+            if(!window.closed){
+                sub_window.close();
+            }
+        }
+
+        let x = 300, y=300;
+        // setInterval(function(){
+        //     x+=10;
+        //     y+=10;
+        //     sub_window.moveTo(x,y);
+        // },1000);
+        // sub_window.moveTo(x,y);
+    </script>
+
+</body>
+</html>
