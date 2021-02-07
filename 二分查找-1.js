@@ -87,7 +87,68 @@ var shipWithinDays = function(weights, D) {
 };
 
 // console.log(shipWithinDays([1,2,3,4,5,6,7,8,9,10],5))
-let mid = 0
-let l = 3
-l = mid++
-console.log(l,mid)
+// let mid = 0
+// let l = 3
+// l = mid++
+// console.log(l,mid)
+
+const minEatingBananaSpeed = function(piles,H){
+    let left = 0, right = Math.max(...piles);
+    while(left<=right){
+        let mid = left + Math.floor((right - left)/2);
+        if(canFinish(piles,mid,H)){
+            right = mid;
+        }else{
+            left = mid + 1;
+        }
+    }
+    return left;
+    function canFinish(piles,speed,H){
+        // 判断是否能够以当前的speed在H小时里吃完Piles
+        // 吃一堆香蕉需要多少时间
+        let hour = 0;
+        for(let i=0;i<piles.length;i++){
+            hour +=Math.floor(piles[i]/speed) + (piles[i]%speed===0?0:1);
+        }
+        return hour<=H;
+    }
+} 
+
+
+
+const shipWithinDaysPro = function(weights, D){
+    let left = Math.max(...weights);
+    let right = null;
+    for(let i=0;i<weights.length;i++){
+        right +=weights[i];
+    }
+    right++;
+    while(left<right){
+        let mid = left + Math.floor((right - left)/2);
+        if(canConvertNWeights(weights,mid,D)){
+            right = mid;
+        }else{
+            left = mid + 1;
+        }
+    }
+    return left;
+    function canConvertNWeights(weights, speed, D){
+        let i = 0;
+        for(let day=0;day<D;day++){
+            let maxCap = speed;
+            while((maxCap-=weights[i])>=0){
+                // 以当前的speed能搬几个箱子
+                i++;
+                if(i===weights.length){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+console.log(shipWithinDaysPro([1,2,3,4,5,6,7,8,9,10],5));
+
+// console.log(minEatingBananaSpeed([30,11,23,4,20],5));
+console.log("abcde".substr(1,2));
