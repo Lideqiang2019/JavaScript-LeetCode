@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id='test-1' class="test">111</div>
+    <div id='test-1' class="test" style="border: 1cm;background-color: aqua;width: 20px;height: 20px;">111</div>
     <script>
         window.onload = function () {
             let someNode = document.createElement('div');
@@ -29,6 +29,8 @@
             newNode.appendChild(document.createTextNode("<strong>Hello<strong/>world"));
             myDiv.appendChild(newNode);
             console.log(newNode.parentNode,myDiv.childNodes);
+
+            console.log(document.defaultView.getComputedStyle(document.getElementsByClassName('test'),null));
         }
 
     </script>
