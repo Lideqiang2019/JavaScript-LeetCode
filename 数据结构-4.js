@@ -94,7 +94,7 @@ var constructMaximumBinaryTree = function(nums) {
 
 var buildTree = function(preorder, inorder) {
     /**105. 从前序与中序遍历序列构造二叉树
-     * 找到构造的root节点，前序和中序都要找
+     * 找到构造的root节点，前序和中序都要找,传入前序和中序的数组，这个数组是以root为节点的，返回以root为根节点的树
      */
     if(!preorder.length || !inorder.length) return null
     let root = new TreeNode(preorder[0])
@@ -246,4 +246,35 @@ MyStack.prototype.top = function() {
  */
 MyStack.prototype.empty = function() {
     return this.stack.length===0
+};
+
+/**
+ * 99. 恢复二叉搜索树
+ */
+var recoverTree = function(root) {
+    let err1 = null, err2 = null;
+    let pre = new TreeNode(-Infinity);
+    traverse(root);
+    // 交换两个错误节点
+    let tmp = err1.val;
+    err1.val = err2.val;
+    err2.val = tmp;
+
+    function traverse(root){
+        if(!root){
+            return;
+        }
+        traverse(root.left);
+        // 需要交换节点顺序
+        if(root.val<pre.val && err1==null){
+            // 记录第一个错误点
+            err1 = pre;
+        }
+        if(root.val<pre.val && err1!=null){
+            err2 = root;
+        }
+
+        pre = root;
+        traverse(root.right);
+    }
 };

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="myForm" method="POST">
+        <input type="text" id="mytext">
+        <ul>
+            <li><input type="radio" name="color" value="red"></li>
+            <li><input type="radio" name="color" value="green"></li>
+            <li><input type="radio" name="color" value="blue"></li>
+            <li><input type="submit" name="submit-btn" autofocus></li>
+        </ul>
+
+    </form>
+    <script>
+        let form = document.getElementById("myForm");
+        // console.log(form.elements["color"][0]);
+        form.addEventListener("submit",(e)=>{
+            console.log("点击提交");
+
+            let target = e.target;
+
+            let btn = target.elements["submit-btn"];
+
+            btn.disabled = true;
+
+           e.preventDefault();
+        });
+        let textbox = document.getElementById("mytext");
+        textbox.value = "Hello World!";
+        // let range = textbox.createTextRange();
+
+        // textbox.select();
+        textbox.setSelectionRange(0,3);
+        console.log(textbox);
+    </script>
+</body>
+</html>

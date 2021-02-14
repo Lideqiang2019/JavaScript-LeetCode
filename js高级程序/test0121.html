@@ -8,11 +8,21 @@
 </head>
 <body>
     <h1>test</h1>
+    <input id='test'>这是一个测试</input>
+    <div id = 'test-1'>坐标</div>
     <script>
         // 动态加载script元素，应该提前加上link，标志资源的存在性。
-        let script = document.createElement('script');
-        script.src = "test0121-1.js"
-        document.head.appendChild(script)
+        // let script = document.createElement('script');
+        // script.src = "test0121-1.js"
+        // document.head.appendChild(script);
+        let t1 = document.getElementById("test");
+        t1.addEventListener('blur',(e)=>{
+            console.log(e.target,e.clientX,e.clientY);
+        });
+        let t2 = document.getElementById("test-1");
+        t2.addEventListener('click',(e)=>{
+            console.log(e.clientX,e.clientY);
+        });
     </script>
 </body>
 </html>
