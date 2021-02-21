@@ -26,7 +26,29 @@ var coinChange = function(coins, amount) {
     }
     return (dp[amount]===amount+1)?-1:dp[amount]
 };
-
+var coinChange = function(coins, amount) {
+    // dp(amout)表示能够凑够amount的最少硬币数，选择，base case
+    let memo = {};
+    return dp(amount);
+    function dp(amount){
+        if(amount in memo) return memo[amount];
+        if(amount===0){
+            return 0;
+        }
+        if(amount<0) return -1;
+        let res = Number.MAX_SAFE_INTEGER;
+       
+        for(let coin of coins){
+            let subproblem = dp(amount-coin);
+            if(subproblem===-1){
+                continue;
+            }
+            res = Math.min(res,subproblem + 1); // 如果选择当前的coin       
+        }
+        memo[amount] = res<Number.MAX_SAFE_INTEGER?res:-1;
+        return memo[amount];
+    }
+};
 /**
  * 求能够组合数
  */

@@ -9,14 +9,24 @@ class TreeNode{
         this.left = this.right = null
     }
 }
-function isVaildBST(root,min,max){
-    if(root==null) return true
-    if(min!==null && root.val<=min) return false
-    if(max!==null && root.val>=max) return false
-
-    // 边界，左子树的边界在根节点，右字树的左边界在
-    return isVaildBST(root.left,min,root) && isVaildBST(root.right,root,max)
-}
+var isValidBST = function(root) {
+    // 递归，二叉搜索树的遍历
+    return traverse(root,null,null)
+    function traverse(root,min,max){
+        // 需要判断右侧的值可能小于左边的可能
+        if(root==null){
+            return true;
+        }
+        if(min!=null && min.val>=root.val){
+            return false;
+        }
+        if(max!=null && max.val<=root.val){
+            return false;
+        }
+       
+        return traverse(root.left,min,root) && traverse(root.right,root,max);
+    }
+};
 
 /**
  * 在BST中查找一个数
@@ -60,8 +70,35 @@ function insertIntoBST(root,val){
 }
 
 /**
- * 删除一个数
+ * 450. 删除二叉搜索树中的节点
  */
+var deleteNode = function(root, key) {
+    // deleteNode找到后
+    if(root==null) return null;
+    if(root.val === key){
+        // 找到了,分情况
+        if(root.left==null) return root.right;
+        if(root.right == null) return root.left;
+
+        // 找到右子树的最小值
+        let minNode = getMinNode(root.right);
+        root.val = minNode.val;
+        root.right = deleteNode(root.right,minNode.val);
+    }
+    if(root.val>key){
+        root.left = deleteNode(root.left,key);
+    }
+    if(root.val<key){
+        root.right = deleteNode(root.right,key);
+    }
+    return root;
+};
+function getMinNode(root){
+    while(root.left!=null){
+        root = root.left;
+    }
+    return root;
+    }
 function deleteNodeBST(root, key){
     if(root.val ===key) {
         // 找到了，应该做点什么
@@ -149,3 +186,20 @@ var buildTree = function(preorder, inorder) {
     return node
 };
 
+/**
+ * 108. 将有序数组转换为二叉搜索树
+ */
+var sortedArrayToBST = function(nums) {
+    return buildTree(nums);
+    function buildTree(nums){ // 返回一颗树
+        if(!nums.length){
+            return null;
+        }
+        // let index = nums.indexOf(Math.min(...nums)); 升序数组
+        let index = Math.floor(nums.length/2);
+        let root = new TreeNode(nums[index]);
+        root.left = buildTree(nums.slice(0,index));
+        root.right = buildTree(nums.slice(index+1));
+        return root;
+    }
+};

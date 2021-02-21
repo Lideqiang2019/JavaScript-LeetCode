@@ -251,7 +251,7 @@ var solveSudoku = function(board) {
         for(let i=0;i<9;i++){
             if(board[r][i]==ch) return false
             if(board[i][c]==ch) return false
-            if(board[Math.floor(r/3)*3 + Math.floor(i/3)][Math.floor(c/3)*3 + c%3]==ch) return false
+            if(board[Math.floor(r/3)*3 + Math.floor(i/3)][Math.floor(c/3)*3 + i%3]==ch) return false
         }
         return true
     }

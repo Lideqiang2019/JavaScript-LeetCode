@@ -17,7 +17,8 @@ var multiply = function(num1, num2) {
     let res = new Array(m+n).fill(0);
     for(let i=m-1;i>=0;i--){
         for(let j=n-1;j>=0;j--){
-            let mul = (parseInt(num1[i]))*(parseInt(num2[j]));               let p1 = i+j;
+            let mul = (parseInt(num1[i]))*(parseInt(num2[j]));               
+            let p1 = i+j;
             let p2 = i+j+1;
             let sum = mul + res[p2];
             res[p2] = sum%10;
