@@ -1,4 +1,9 @@
-// 简单版本，但是应该考虑如果arr中有重复的，考虑重复数组出现的次数；
+/*
+    题目描述：
+    给定一串字符串和一个字符数组，问字符串在字符数组中出现的最长连续子串
+    eg. 1. 'AXBCDCEFWDNMN',['C','D'] // 输出 “CD”
+        2. 'AXBCDCEFWDNMN',['D','C','C','E','Z'] // 输出 “CDCE”
+ */
 function findMatchedChars(str,arr){
     // 由于是连续的字符串，可以用指针解决，并不需要上滑动窗口
     let res = {}; // 用来str存储满足在arr中的字符的索引
@@ -26,7 +31,14 @@ function findMatchedChars(str,arr){
 }
 // console.log(findMatchedChars('AXBCDCEFWDNMN',['D','C','C','E','Z'])); // ['D','C','E','F','Z']
 
-
+/**
+ * 
+ * @param {*} num 
+ * 题目描述：
+ * 一个数字如2021,1. 将其子数字顺序打乱得到最大和最小的数，将最大和最小数的差作为一个新的数字重复1
+ * 但是应该注意如果最大值和最小值之差小于1000，应该*10, 直到输出值为6174
+ * 输出“2021->2088->...->6174”
+ */
 function findMin(num){
     let s = num.toString().split('');
     s.sort((a,b)=>(a>b)?1:(a<b)?-1:0);
@@ -56,36 +68,11 @@ function toAList(num){
     return res;
 }
 
-// 2. 
-// 简单版本，但是应该考虑如果arr中有重复的，考虑重复数组出现的次数；
-function findMatchedChars(str,arr){
-    // 由于是连续的字符串，可以用指针解决，并不需要上滑动窗口
-    let res = {}; // 用来str存储满足在arr中的字符的索引
-    let left = 0,
-        right = 0;
-    while(right<str.length){
-        // 扩大窗口
-        if(arr.indexOf(str[right])==-1){
-            // 一旦出现不满足在arr中的字符
-            // 更新res
-            res[right-left] = [left,right];
-            // 重新设置窗口
-            left = ++right;
-        }else{
-            // 扩大窗口时检查是否已经超过了数组的长度
-            right++;
-            if(arr.length==right - left){
-                res[right - left] = [left,right];
-                break;
-            }
-        }
-    }
-    let [start,end] = res[Object.keys(res).sort((a,b)=>a>b?-1:a>b?1:0)[0]];
-    return str.slice(start,end);
-}
-console.log(findMatchedChars('AXBCDCEFWDNMN',['D','C','C','E','Z'])); // ['D','C','E','F','Z']
 // console.log(toAList(2021));
 
+/**
+ * 在问卷调查中，有可能出现跳题的现象，每道题目都有得分，问将问卷做到最后一题能够获得的最大分数和最少分数。
+ */
 // 3. 得到的最大和最小值，可能是回溯算法，n叉树遍历
 const questions = [
     {
