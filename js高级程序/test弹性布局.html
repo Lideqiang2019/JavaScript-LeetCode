@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="弹性布局.css">
+    <style>
+        .post {
+            display: flex;
+            flex-flow: column wrap;
+        }
+
+        .post-meta {
+            display: flex;
+            flex-flow: row wrap;
+            order: 1;
+        }
+
+        .post-body {
+            order: 3;
+        }
+
+        .post-comments {
+            order: 4;
+        }
+
+        .comments-count {
+            margin-left: auto;
+        }
+
+        .post-image {
+            order: 2;
+            align-self: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <ul class="flex-container">
+        <li class="flex-item"><img src="http://placehold.it/300&text=1"></li>
+        <li class="flex-item"><img src="http://placehold.it/300&text=2"></li>
+        <li class="flex-item"><img src="http://placehold.it/300&text=3"></li>
+        <li class="flex-item"><img src="http://placehold.it/300&text=4"></li>
+        <li class="flex-item"><img src="http://placehold.it/300&text=5"></li>
+        <li class="flex-item"><img src="http://placehold.it/300&text=6"></li>
+     </ul> -->
+    <div class="post">
+        <h1>This is my first blog post</h1>
+        <div class="post-meta">
+            <div class="author">Alex Cheng</div>
+            <div class="datetime">2014-07-02 10:10 am</div>
+            <div class="comments-count">2 comments</div>
+        </div>
+        <div class="post-body">
+            My first blog post.
+
+        </div>
+        <div class="post-image">
+            <img src="http://placehold.it/500x200&text=1">
+        </div>
+        <div class="post-comments">
+            <h3>Comments</h3>
+            <ul>
+
+                <li>
+                    <div class="author">Bob</div>
+                    <div>This is a good post.</div>
+                </li>
+                <li>
+                    <div class="autho">David</div>
+                    <div>Good post.</div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

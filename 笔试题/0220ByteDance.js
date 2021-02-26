@@ -4,6 +4,7 @@
     eg. 1. 'AXBCDCEFWDNMN',['C','D'] // 输出 “CD”
         2. 'AXBCDCEFWDNMN',['D','C','C','E','Z'] // 输出 “CDCE”
  */
+// 'ABBCAD',['A','B','C']此解法存在一个问题，对于题目给的列子是可以完成的，但是left不是一步一步更新的，这有可能会忽略最优解
 function findMatchedChars(str,arr){
     // 由于是连续的字符串，可以用指针解决，并不需要上滑动窗口
     let res = {}; // 用来str存储满足在arr中的字符的索引
@@ -29,7 +30,68 @@ function findMatchedChars(str,arr){
     let [start,end] = res[Object.keys(res).sort((a,b)=>a>b?-1:a>b?1:0)[0]];
     return str.slice(start,end);
 }
-// console.log(findMatchedChars('AXBCDCEFWDNMN',['D','C','C','E','Z'])); // ['D','C','E','F','Z']
+
+var findMatchedCharsPro = function(str,arr){
+    // 这道题不适合=再用shrink，因为关心的是字符串最长是arr子串的排序,需要统计arr中每个字符出现的次数
+    // 开启暴力模式
+    let res = 0;
+    let dic = {};
+    let n = arr.length;
+    for(let i=0;i<n;i++){
+        for(let j=i+1;j<=n;j++){
+            if(checkInclusion(str,arr.slice(i,j))){
+                if(j-i>res){
+                    console.log(arr.slice(i,j));
+                    res = j - i;
+                    dic[res] = arr.slice(i,j);
+                }
+            }
+        }
+    }
+    return [res,dic[res]];
+    function checkInclusion(s2, s1) {
+        // 这题其实有点连续子串的意思, 窗口就不会那么麻烦了，注意s1和s2含义，别搞反了
+        // s1是need, s2必须是连续的子串
+        let left=0,
+            right = 0;
+        let need = {};
+        let window = {};
+        for(let c of s1){
+            need[c]?need[c]++:need[c]=1;
+        }
+        let needsLen = Object.keys(need).length;
+        let valid = 0;
+        while(right<s2.length){
+            let c = s2[right];
+            right++;
+            if(need[c]){
+                // 这个字符在need里，需要更新一下窗口
+                window[c]?window[c]++:window[c]=1;
+                if(need[c] == window[c]){
+                    valid++;
+                }
+                
+            }
+    
+            while(right-left>=s1.length){
+                // 如果窗口中的字符比s1中字符还多，应该更新窗口大小
+                if(valid == needsLen){
+                    return true;
+                }
+                let d = s2[left];
+                left++;
+                if(need[d]){
+                    if(need[d] == window[d]){
+                        valid--;
+                    }
+                    window[d]--;
+                }
+            }
+        }
+        return false;
+    };
+}
+console.log(findMatchedCharsPro('AXBCDCEFWDNMN',['D','C','E','F','Z'])); // ['D','C','E','F','Z']
 
 /**
  * 
@@ -166,4 +228,4 @@ function getQuestionMinMaxVal(questions){
     }
 }
 
-console.log(getQuestionMinMaxVal(questions))
+// console.log(getQuestionMinMaxVal(questions))
