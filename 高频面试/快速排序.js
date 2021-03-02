@@ -18,7 +18,7 @@ function sort(nums,lo,hi){
 
 function partition(nums,lo,hi){
     // 本来应该随机取，这里取第一个，假设数组是打乱的
-    if(lo===hi) return nums[lo];
+    if(lo===hi) return lo;
     let pivot = nums[lo];
     let i = lo,
         j = hi+1;

@@ -6,7 +6,7 @@ function merge(arr1,arr2){
     while(arr1[i]!=undefined && arr2[j]!=undefined){
         if(arr1[i]<=arr2[j]){
             res.push(arr1[i]);
-            i++
+            i++;
         }else{
             res.push(arr2[j]);
             j++;
