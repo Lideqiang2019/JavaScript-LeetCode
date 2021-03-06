@@ -52,50 +52,50 @@
 
     getIn(t, ['e'], '') = 'alipay'
  */
-// function getIn(params,array,defaultValue){
-//     // 根据array，比如去'b'，params->'b'，判断是否存在需要的变量名，如果有那么继续array迭代
-//     let n = array.length;
-//     let res = '';
-//     if(array[0] in params){
-//       if(n===1){
-//         if(defaultValue===''){
-//           res = params[array[0]];
-//         }else{
-//           res = defaultValue;
-//         }
-//         return res;
-//       }else{
-//         return getIn(params[array[0]],array.slice(1),defaultValue);
-//       }
-//     }
-// }
-
-function getIn(params, array, defaultValue) {
-  let res = '';
-  for(p of array){
-    if(p in params){
-      if (array.length === 1) {
-        // 最后一个属性了
-        if (defaultValue === '') {
-          res = params[p];
-        } else {
+function getIn(params,array,defaultValue){
+    // 根据array，比如去'b'，params->'b'，判断是否存在需要的变量名，如果有那么继续array迭代
+    let n = array.length;
+    let res = '';
+    if(array[0] in params){
+      if(n===1){
+        if(defaultValue===''){
+          res = params[array[0]];
+        }else{
           res = defaultValue;
         }
         return res;
-      } else {
-        // 递归
-        return getIn(params[p], array.slice(1), defaultValue);
+      }else{
+        return getIn(params[array[0]],array.slice(1),defaultValue);
       }
-    }else{
-      return '没找到'
     }
-    
-  }
 }
 
-const t = { a: { b: [{ c: 2 }] } };
+// function getIn(params, array, defaultValue) {
+//   let res = '';
+//   for(p of array){
+//     if(p in params){
+//       if (array.length === 1) {
+//         // 最后一个属性了
+//         if (defaultValue === '') {
+//           res = params[p];
+//         } else {
+//           res = defaultValue;
+//         }
+//         return res;
+//       } else {
+//         // 递归
+//         return getIn(params[p], array.slice(1), defaultValue);
+//       }
+//     }else{
+//       return '没找到'
+//     }
+    
+//   }
+// }
+
+const t = { a: { b: [{ c: 2 }] } ,c:{d:3}};
 // console.log(Object.keys(t['a']['b']));
-console.log(getIn(t, ['a', 'b', '0','c'], ''));
+console.log(getIn(t, ['c', 'd'], ''));
 // const test = {a:1}
 // test.b.c
 

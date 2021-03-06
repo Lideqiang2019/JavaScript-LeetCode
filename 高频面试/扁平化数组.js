@@ -19,30 +19,31 @@ let arr = [
 // console.log(arr);
 
 // 4. 递归
-// let res = [];
-// function traverse(arr){
-//     for(let i=0;i<arr.length;i++){
-//         if(Number.isInteger(arr[i])){
-//             // 如果是Array,继续递归，直到不是数
-//             res.push(arr[i]);
-//         }else{
-//             traverse(arr[i]); // 进场递归一旦不是array
-//         }
-//     }
-// }
-// traverse(arr);
-// console.log(res);
-
-let arr1 = [1,[2,[3,4]]];
-// 迭代方法,一直向内找到6,找到的同时
-let right = arr1;
 let res = [];
-let tmp = null;
-while(right.length){
-    tmp = [right[0],tmp];
-    right = right[1];
+function traverse(arr){
+    for(let i=0;i<arr.length;i++){
+        if(Number.isInteger(arr[i])){
+            // 如果是Array,继续递归，直到不是数
+            res.push(arr[i]);
+            console.log(i);
+        }else{
+            traverse(arr[i]); // 进场递归一旦不是array
+        }
+    }
 }
-tmp = [right,tmp];
-console.log(right);
+traverse(arr);
+console.log(res);
 
-console.log(tmp);
+// let arr1 = [1,[2,[3,4]]];
+// // 迭代方法,一直向内找到6,找到的同时
+// let right = arr1;
+// let res = [];
+// let tmp = null;
+// while(right.length){
+//     tmp = [right[0],tmp];
+//     right = right[1];
+// }
+// tmp = [right,tmp];
+// console.log(right);
+
+// console.log(tmp);
