@@ -35,4 +35,5 @@ var lengthOfLongestSubstring = function(s) {
     return res;
 };
 
+
 console.log(lengthOfLongestSubstring("abcabcbb"));
