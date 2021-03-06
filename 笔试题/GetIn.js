@@ -1,43 +1,43 @@
-const t = {a: { b: [{c:2}]}}
-function getIn(params,array,defaultValue){
-    // 根据array，比如去'b'，params->'b'，判断是否存在需要的变量名，如果有那么继续array迭代
-    let i = 0,
-        n = array.length;
-    if(array[0] in params){
-      if(i>n){
-        console.log(params[array[0]]);
-        return;
-      }else{
-        ++i;
-        getIn(params[array[0]],array.slice(i),defaultValue);
-      }
-    }
-}
+// const t = {a: { b: [{c:2}]}}
+// function getIn(params,array,defaultValue){
+//     // 根据array，比如去'b'，params->'b'，判断是否存在需要的变量名，如果有那么继续array迭代
+//     let i = 0,
+//         n = array.length;
+//     if(array[0] in params){
+//       if(i>n){
+//         console.log(params[array[0]]);
+//         return;
+//       }else{
+//         ++i;
+//         getIn(params[array[0]],array.slice(i),defaultValue);
+//       }
+//     }
+// }
 
-getIn(t,['a','b','0'],'');
+// getIn(t,['a','b','0'],'');
 
 //评测题目: 无
 // 实现一个function getIn(params, array, defaultValue) {
-	
+
 //}
 
-const t = {a: { b: [{c:2}, {d:1}]}, e: 'alipay'}
-function getIn(params,array,defaultValue){
-    let i = 0;
-    if(array[0] in params){
-      if(typeof params[array[0]]!='object'){
-        console.log(params[array[0]]);
-        return params[array[0]];
-      }else{
-        ++i;
-        getIn(params[array[0]],array.slice(i),defaultValue);
-      }
-    }else{
-      throw error('没找到！')
-    }
-}
+// const t = {a: { b: [{c:2}, {d:1}]}, e: 'alipay'}
+// function getIn(params,array,defaultValue){
+//     let i = 0;
+//     if(array[0] in params){
+//       if(typeof params[array[0]]!='object'){
+//         console.log(params[array[0]]);
+//         return params[array[0]];
+//       }else{
+//         ++i;
+//         getIn(params[array[0]],array.slice(i),defaultValue);
+//       }
+//     }else{
+//       throw error('没找到！')
+//     }
+// }
 
-const t = {a: { b: [{c:2}]}}
+
 /**
  * 
  * @param {*} params 
@@ -52,35 +52,57 @@ const t = {a: { b: [{c:2}]}}
 
     getIn(t, ['e'], '') = 'alipay'
  */
-function getIn(params,array,defaultValue){
-    // 根据array，比如去'b'，params->'b'，判断是否存在需要的变量名，如果有那么继续array迭代
-    let i = 0,
-        n = array.length;
-    let res = '';
-    if(array[0] in params){
-      if(i>n){
-        if(!defaultValue){
-          res = params[array[0]];
-        }else{
+// function getIn(params,array,defaultValue){
+//     // 根据array，比如去'b'，params->'b'，判断是否存在需要的变量名，如果有那么继续array迭代
+//     let n = array.length;
+//     let res = '';
+//     if(array[0] in params){
+//       if(n===1){
+//         if(defaultValue===''){
+//           res = params[array[0]];
+//         }else{
+//           res = defaultValue;
+//         }
+//         return res;
+//       }else{
+//         return getIn(params[array[0]],array.slice(1),defaultValue);
+//       }
+//     }
+// }
+
+function getIn(params, array, defaultValue) {
+  let res = '';
+  for(p of array){
+    if(p in params){
+      if (array.length === 1) {
+        // 最后一个属性了
+        if (defaultValue === '') {
+          res = params[p];
+        } else {
           res = defaultValue;
         }
         return res;
-      }else{
-        ++i;
-        getIn(params[array[0]],array.slice(i),defaultValue);
+      } else {
+        // 递归
+        return getIn(params[p], array.slice(1), defaultValue);
       }
+    }else{
+      return '没找到'
     }
+    
+  }
 }
 
-
-
-// const test = {a:1} 
+const t = { a: { b: [{ c: 2 }] } };
+// console.log(Object.keys(t['a']['b']));
+console.log(getIn(t, ['a', 'b', '0','c'], ''));
+// const test = {a:1}
 // test.b.c
 
 // const t = {a: { b: [{c:2}]}}
 
 // getIn(test, ['b', 'c'],3) === 3
 // getIn(test, ['a'], Valu) === 1
-  
+
 // getIn(t, ['a', 'b', '0', 'c'], '') === 2
 
