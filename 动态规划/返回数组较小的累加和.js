@@ -74,3 +74,4 @@ var sortTwoArr = function(arr){
 }
 
 console.log(sortTwoArr([1,2,3,4,100]));
+
