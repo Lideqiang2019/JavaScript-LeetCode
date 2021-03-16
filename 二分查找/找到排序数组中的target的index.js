@@ -29,3 +29,23 @@ var search = function(nums, target) {
     }
     return -1;
 };
+
+function search( nums ,  target ) {
+    // write code here
+    let left = 0,
+        right = nums.length-1;
+    while(left<=right){
+        let mid = left + Math.floor((right - left)/2);
+        if(nums[mid]>target){
+            right = mid - 1;
+        }else if(nums[mid]<target){
+            left = mid + 1;
+        }else{
+            while(mid!==0 && nums[mid-1]===nums[mid]){
+                mid--;
+            }
+            return mid;
+        }
+    }
+    return -1;
+}

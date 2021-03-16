@@ -41,7 +41,7 @@ var findTargetSumWays = function(nums, S) {
     let sum = 0;
     let n = nums.length;
     for(num of nums){
-        sum +=num
+        sum +=num 
     }
     if(sum<S) return 0
     if((sum+S)%2!==0) return 0
