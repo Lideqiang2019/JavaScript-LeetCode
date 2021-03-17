@@ -95,3 +95,10 @@ function plus(...args){
 }
 
 console.log(plus(1,3)(2)(1));
+
+function myBind(f,objTarget){
+    let args = Array.prototype.slice.call(objTarget,2);
+    return function(){
+        return f.apply(objTarget,Array.prototype.slice.call(args).concat(arguments));
+    }
+}

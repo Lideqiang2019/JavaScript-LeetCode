@@ -21,3 +21,22 @@ function merge(arr1,arr2){
 }
 
 console.log(merge([1,2,2,3],[2,3,4]));
+
+function merge( A, m, B, n ) {
+    // write code here
+    while(m>0 && n>0){
+        if(A[m-1]>B[n-1]){
+            A[m+n-1] = A[m-1];
+            m--;
+        }else{
+            A[m+n-1] = B[n-1];
+            n--;
+        }
+    }
+    if(n>0){
+        for(let i=0;i<n;i++){
+            A[i] = B[i];
+        }
+    }
+    return A;
+}

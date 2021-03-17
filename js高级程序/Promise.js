@@ -75,3 +75,7 @@ console.log(3);
 bar();
 console.log(5);
 baz();
+
+function compose(...fn){
+    return fn.reduce((pre,cur)=>pre.then(cur),Promise.resolve(f));
+}
