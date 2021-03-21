@@ -25,15 +25,29 @@ function traverse(arr){
         if(Number.isInteger(arr[i])){
             // 如果是Array,继续递归，直到不是数
             res.push(arr[i]);
-            console.log(i);
         }else{
             traverse(arr[i]); // 进场递归一旦不是array
         }
     }
 }
-traverse(arr);
-console.log(res);
+// traverse(arr);
+// console.log(res);
 
+var flatten = function(nums){
+    let res = [];
+    traverse(nums);
+    return res;
+    function traverse(nums){
+        for(let i=0;i<nums.length;i++){
+            if(Array.isArray(nums[i])){
+                traverse(nums[i])
+            }else{
+                res.push(nums[i]);
+            }
+        }
+    }
+}
+console.log(flatten(arr));
 // let arr1 = [1,[2,[3,4]]];
 // // 迭代方法,一直向内找到6,找到的同时
 // let right = arr1;

@@ -33,4 +33,21 @@ let c = [1,2,a];
 let b = deepClone1(c);
 console.log(b);
 
+function deepClone(obj){
+    let objClone = typeof obj=='object'?{}:[];
+    for(let s in obj){
+        if(obj.hasOwnProperty(s)){
+            // 判断不是原型上的属性
+            if(obj[s] && typeof obj[s]!='object'){
+                // 已经递归到底了
+                objClone[s] = obj[s];
+            }else{
+                // 递归
+                objClone[s] = deepClone(obj[s]);
+            }
+        }
+    }
+    return objClone;
+}
+
 
